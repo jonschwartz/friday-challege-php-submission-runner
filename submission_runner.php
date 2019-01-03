@@ -1,14 +1,19 @@
 <?php
 /**
  * submission_runner.php
- * {DESCRIPTION}
+ * run all submissions for #friday-challenge-php
  *
  * @author    Jon Schwartz <joschwartz@wayfair.com>
  * @copyright 2018 Wayfair LLC - All rights reserved
  */
 
 // TEST VARS
-$challenge_date = '2018_12_07';
+
+$challenge_date = '2018_12_21';
+if (!empty($argv[1])) {
+  $challenge_date = $argv[1];
+}
+
 $test_return_params = ['passed', 'time'];
 
 $challenge_dir  = dirname(__FILE__);
@@ -17,7 +22,7 @@ $this_challenge = $challenge_dir . '/' . $challenge_date . '/';
 $trophy_winners = include('trophy_progression.php');
 $trophy_counts  = array_count_values($trophy_winners);
 
-echo 'The Automated Awards for : ' . $challenge_date . "\n\n";
+echo '```The Automated Awards for : ' . $challenge_date . "\n\n";
 
 
 require_once $this_challenge . 'test.php';
@@ -41,12 +46,15 @@ $min_time_person = [];
 
 echo '"Unit" testing...' . "\n\n";
 
+$excluded_files = ['test.php', 'joschwartz.php', 'challenge.php'];
+$submission_count = 0;
+
 foreach ($directory_iterator as $fileinfo) {
   $passed = false;
-  if (($fileinfo->getExtension() == 'php') && ($fileinfo->getFilename() != 'test.php') &&
-      ($fileinfo->getFilename() != 'joschwartz.php')) {
+  if (($fileinfo->getExtension() == 'php') && (!in_array($fileinfo->getFilename(), $excluded_files))) {
     $function = include($fileinfo->getPath() . '/' . $fileinfo->getFilename());
 
+    $submission_count++;
     $person = $fileinfo->getBasename('.php');
     echo $person . ": ";
     $start = microtime(true);
@@ -140,6 +148,17 @@ $last_winner_count = $trophy_counts[$last_winner];
 $first_previous_winner       = array_shift($trophy_winners_reversed);
 $first_previous_winner_count = $trophy_counts[$first_previous_winner];
 
+$submission_debate_phrases = [
+    "pouring every so finely over code to see who’s solution was most elegant",
+    "debating with myself and others over who was the most deserving",
+    "talking it over with the elephpants",
+    "interpretive dancing about it for at least 2 hours",
+    "staring blankly at a wall for a while",
+    "explaining it to the duck",
+    "watching the social network just to see the small amount of php written on whiteboards in certain scenes",
+    "submitting an mr about who to pick and getting back some useful comments"
+];
+
 echo "\n--------------------------------------------------------------------\n
 Min Line Award:                            (" . $min_line_count . ")\t@" . join(', @', $min_line_person) . ' 
 Min Characters Excluding Whitespace Award: (' . $min_char_count . ")\t@" . join(', @', $min_char_person) . ' 
@@ -152,4 +171,6 @@ The Last winner ' . $last_winner . ' has won ' . $last_winner_count . ' time' .
      ($last_winner_count != 1 ? 's' : null) . '
 Before that it was ' . $first_previous_winner . ' who has won ' . $first_previous_winner_count . ' time' .
      ($first_previous_winner_count != 1 ? 's' : null) .
-     "\n"; //Submitted Fastest Award:                   (' . date('m-d h:i:s ', $min_submitted_time) . ")\t@" . join(', @', $min_submitted_person) . '
+"```
+
+Given the literally ".$submission_count.' submissions, after '.join(' and ', [$submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)], $submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)]]).'.  I’ve made a decision over this week’s winner.'; //Submitted Fastest Award:                   (' . date('m-d h:i:s ', $min_submitted_time) . ")\t@" . join(', @', $min_submitted_person) . '
