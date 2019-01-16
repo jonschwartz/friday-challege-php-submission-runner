@@ -68,6 +68,8 @@ function test($function){
       'two things wrong, mismatched first' => [')((', [false, 'parenthesis order mismatch']],
       'non parens in string' => ['(randomstuffthatisntparens)', true],
       'two sets of parens nested in parent missing end paren' => ['(()()', [false, 'parenthesis count mismatch']],
+      'bobby' => ['()(())(())))((()())())()()()(()))(())(())(()(())))()(((()))(())))(()()()(()()()))(()()(())()', true],
+      'bobby2' => ['((())(()()()((((())()(())(()))()())()()()(()())())()()())())', true],
   ];
 
   $passed = true;

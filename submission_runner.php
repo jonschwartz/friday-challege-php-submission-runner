@@ -9,7 +9,7 @@
 
 // TEST VARS
 
-$challenge_date = '2018_12_21';
+$challenge_date = '2019_01_10';
 if (!empty($argv[1])) {
   $challenge_date = $argv[1];
 }
@@ -173,4 +173,4 @@ Before that it was ' . $first_previous_winner . ' who has won ' . $first_previou
      ($first_previous_winner_count != 1 ? 's' : null) .
 "```
 
-Given the literally ".$submission_count.' submissions, after '.join(' and ', [$submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)], $submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)]]).'.  I’ve made a decision over this week’s winner.'; //Submitted Fastest Award:                   (' . date('m-d h:i:s ', $min_submitted_time) . ")\t@" . join(', @', $min_submitted_person) . '
+Given the literally ".$submission_count.' submissions, after '.join(' and ', [$submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)], $submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)]]).'.  I’ve made a decision on this week’s winner.'; //Submitted Fastest Award:                   (' . date('m-d h:i:s ', $min_submitted_time) . ")\t@" . join(', @', $min_submitted_person) . '
