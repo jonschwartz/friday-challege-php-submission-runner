@@ -9,7 +9,7 @@
 
 // TEST VARS
 
-$challenge_date = '2019_01_10';
+$challenge_date = '2019_01_18';
 if (!empty($argv[1])) {
   $challenge_date = $argv[1];
 }
@@ -61,6 +61,8 @@ foreach ($directory_iterator as $fileinfo) {
 
     $passed = test($function);
     $time = microtime(true) - $start;
+
+    echo 'Ran in '.$time."\n";
 
     if (!($passed)) {
       echo "\n-------------------------------\n";
@@ -142,11 +144,31 @@ if ($min_line_count == 9999999999) {
 
 $trophy_winners_reversed = array_reverse($trophy_winners);
 
-$last_winner       = array_shift($trophy_winners_reversed);
-$last_winner_count = $trophy_counts[$last_winner];
+$trophy_winners_combined = [];
+foreach ($trophy_winners_reversed as $date => $winner) {
+  $date = substr($date, 0, 10);
+  if (empty($trophy_winners_combined[$date])) {
+    $trophy_winners_combined[$date] = $winner;
+  } else {
+    $orig_count = $trophy_counts[$trophy_winners_combined[$date]];
+    $trophy_winners_combined[$date] .= ', '.$winner;
+    $trophy_counts[$trophy_winners_combined[$date]] = $orig_count + $trophy_counts[$winner];
+  }
+}
 
-$first_previous_winner       = array_shift($trophy_winners_reversed);
+
+$collective_last_winner = false;
+$collective_first_previous_winner = false;
+
+
+$last_winner       = array_shift($trophy_winners_combined);
+$last_winner_count = $trophy_counts[$last_winner];
+$collective_last_winner = (stristr($last_winner, ',') ? true : false);
+
+$first_previous_winner       = array_shift($trophy_winners_combined);
 $first_previous_winner_count = $trophy_counts[$first_previous_winner];
+$collective_first_previous_winner = (stristr($first_previous_winner, ',') ? true : false);
+
 
 $submission_debate_phrases = [
     "pouring every so finely over code to see who’s solution was most elegant",
@@ -167,9 +189,9 @@ Min Running Time Award:                    (' . $min_time . ")\t@" . join(', @',
 
 --------------------------------------------------------------------
 The Winner\'s Circle (past winners):
-The Last winner ' . $last_winner . ' has won ' . $last_winner_count . ' time' .
+The Last winner ' . $last_winner . ' ' . ($collective_last_winner ? 'have collectively' : 'has') . ' won ' . $last_winner_count . ' time' .
      ($last_winner_count != 1 ? 's' : null) . '
-Before that it was ' . $first_previous_winner . ' who has won ' . $first_previous_winner_count . ' time' .
+Before that it was ' . $first_previous_winner . ' who ' . ($collective_first_previous_winner ? 'have collectively' : 'has') . ' won ' . $first_previous_winner_count . ' time' .
      ($first_previous_winner_count != 1 ? 's' : null) .
 "```
 
