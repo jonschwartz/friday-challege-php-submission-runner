@@ -9,7 +9,7 @@
 
 // TEST VARS
 
-$challenge_date = '2019_01_18';
+$challenge_date = '2019_02_01';
 if (!empty($argv[1])) {
   $challenge_date = $argv[1];
 }
@@ -73,8 +73,10 @@ foreach ($directory_iterator as $fileinfo) {
     if ($passed) {
 
       // min run time award
-      if ($time <= $min_time) {
+      if ($time < $min_time) {
         $min_time = $time;
+        $min_time_person = [$person];
+      } elseif ($time == $min_time) {
         $min_time_person[] = $person;
       }
 
@@ -178,7 +180,12 @@ $submission_debate_phrases = [
     "staring blankly at a wall for a while",
     "explaining it to the duck",
     "watching the social network just to see the small amount of php written on whiteboards in certain scenes",
-    "submitting an mr about who to pick and getting back some useful comments"
+    "submitting an mr about who to pick and getting back some useful comments",
+    "putting meeting time on the calendars of all the L5s+",
+    "sitting next to a pond on a park bench",
+    "staging an elaborate retelling of each submission done by performers from Berklee",
+    "designing an elaborate machine learning model to chose for me",
+    "failing to actually complete the challenge myself"
 ];
 
 echo "\n--------------------------------------------------------------------\n
@@ -189,10 +196,10 @@ Min Running Time Award:                    (' . $min_time . ")\t@" . join(', @',
 
 --------------------------------------------------------------------
 The Winner\'s Circle (past winners):
-The Last winner ' . $last_winner . ' ' . ($collective_last_winner ? 'have collectively' : 'has') . ' won ' . $last_winner_count . ' time' .
+The Last winner' . ($collective_last_winner ? 's' : '') . ' ' . $last_winner . ' ' . ($collective_last_winner ? 'have collectively' : 'has') . ' won ' . $last_winner_count . ' time' .
      ($last_winner_count != 1 ? 's' : null) . '
 Before that it was ' . $first_previous_winner . ' who ' . ($collective_first_previous_winner ? 'have collectively' : 'has') . ' won ' . $first_previous_winner_count . ' time' .
      ($first_previous_winner_count != 1 ? 's' : null) .
 "```
 
-Given the literally ".$submission_count.' submissions, after '.join(' and ', [$submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)], $submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)]]).'.  I’ve made a decision on this week’s winner.'; //Submitted Fastest Award:                   (' . date('m-d h:i:s ', $min_submitted_time) . ")\t@" . join(', @', $min_submitted_person) . '
+Given the literally ".$submission_count.' submissions, after '.join(' and ', [$submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)], $submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)]]).'.  I’ve made a decision on this week’s winner.'."\n\n"; //Submitted Fastest Award:                   (' . date('m-d h:i:s ', $min_submitted_time) . ")\t@" . join(', @', $min_submitted_person) . '
