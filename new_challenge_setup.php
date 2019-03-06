@@ -11,7 +11,7 @@ $app_root = dirname(__FILE__);
 
 $templates_path = $app_root.'/challenge-data/templates/';
 
-$friday = strtotime('next friday');
+$friday = strtotime($argv[1] ?: 'next friday');
 
 $folder_name = date('Y_m_d', $friday);
 $folder_path = $app_root.'/'.$folder_name;

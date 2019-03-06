@@ -13,4 +13,8 @@ return [
     '01-23-2019a'          => '@slehar',
     '01-23-2019b'          => '@wvanrensselaer',
     '02-01-2019'           => '@grwalker',
+    '02-08-2019'           => '@aelnagger',
+    '02-15-2019'           => '@aelnagger',
+    '02-22-2019'           => '#friday-challenge',
+    '03-01-2019'           => '@jonavin',
 ];

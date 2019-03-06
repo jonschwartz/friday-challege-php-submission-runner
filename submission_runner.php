@@ -9,7 +9,7 @@
 
 // TEST VARS
 
-$challenge_date = '2019_02_01';
+$challenge_date = '2019_02_15';
 if (!empty($argv[1])) {
   $challenge_date = $argv[1];
 }
@@ -46,7 +46,7 @@ $min_time_person = [];
 
 echo '"Unit" testing...' . "\n\n";
 
-$excluded_files = ['test.php', 'joschwartz.php', 'challenge.php'];
+$excluded_files = ['test.php', 'joschwartz.php', 'challenge.php', 'challenge_comment.php', 'post_challenge_writeup.md', 'pre_challenge_writeup.md'];
 $submission_count = 0;
 
 foreach ($directory_iterator as $fileinfo) {
@@ -65,9 +65,11 @@ foreach ($directory_iterator as $fileinfo) {
     echo 'Ran in '.$time."\n";
 
     if (!($passed)) {
+      echo "Failed.\n";
       echo "\n-------------------------------\n";
     } else {
       echo "Passed.\n";
+      echo "\n-------------------------------\n";
     }
 
     if ($passed) {
@@ -188,6 +190,11 @@ $submission_debate_phrases = [
     "failing to actually complete the challenge myself"
 ];
 
+$reason_one_index = rand(0, count($submission_debate_phrases) - 1);
+do {
+  $reason_two_index = rand(0, count($submission_debate_phrases) - 1);
+} while ($reason_two_index == $reason_one_index);
+
 echo "\n--------------------------------------------------------------------\n
 Min Line Award:                            (" . $min_line_count . ")\t@" . join(', @', $min_line_person) . ' 
 Min Characters Excluding Whitespace Award: (' . $min_char_count . ")\t@" . join(', @', $min_char_person) . ' 
@@ -202,4 +209,4 @@ Before that it was ' . $first_previous_winner . ' who ' . ($collective_first_pre
      ($first_previous_winner_count != 1 ? 's' : null) .
 "```
 
-Given the literally ".$submission_count.' submissions, after '.join(' and ', [$submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)], $submission_debate_phrases[rand(0, count($submission_debate_phrases) - 1)]]).'.  I’ve made a decision on this week’s winner.'."\n\n"; //Submitted Fastest Award:                   (' . date('m-d h:i:s ', $min_submitted_time) . ")\t@" . join(', @', $min_submitted_person) . '
+Given the literally ".$submission_count.' submissions, after '.join(' and ', [$submission_debate_phrases[$reason_one_index], $submission_debate_phrases[$reason_two_index]]).'.  I’ve made a decision on this week’s winner.'."\n\n"; //Submitted Fastest Award:                   (' . date('m-d h:i:s ', $min_submitted_time) . ")\t@" . join(', @', $min_submitted_person) . '
