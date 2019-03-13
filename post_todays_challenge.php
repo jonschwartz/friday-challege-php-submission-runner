@@ -87,16 +87,18 @@ if (!(empty($url))) {
 }
 
 
-if (!(empty($challenge_message))) {
-  $data = [
-      'message' => $challenge_message,
-//      'users'   => 'joschwartz',
-      'rooms'   => 'friday-challenge-php'
-  ];
+echo $challenge_message;
 
-  $response = $client->post($wf_slack, [\GuzzleHttp\RequestOptions::JSON => $data]);
-  var_dump($response);
-  echo $response->getBody();
+if (!(empty($challenge_message))) {
+//  $data = [
+//      'message' => $challenge_message,
+////      'users'   => 'joschwartz',
+//      'rooms'   => 'friday-challenge-php'
+//  ];
+//
+//  $response = $client->post($wf_slack, [\GuzzleHttp\RequestOptions::JSON => $data]);
+//  var_dump($response);
+//  echo $response->getBody();
   send_to_jon($wf_slack, $client, 'Challenge has been posted.');
 } else {
   send_to_jon($wf_slack, $client, 'Challenge Message was empty.  Did not post to channel.');
