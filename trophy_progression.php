@@ -18,5 +18,8 @@ return [
     '02-22-2019'           => '#friday-challenge',
     '03-01-2019a'          => '@jonavin',
     '03-01-2019b'          => '@pluczkiewicz',
-    '03-08-2019'           => '@scarroll'
+    '03-08-2019'           => '@scarroll',
+    '03-15-2019'           => '@jonavin',
+    '03-22-2019'           => '@wbaldoumas',
+    '03-29-2019'           => '@jxu1'
 ];

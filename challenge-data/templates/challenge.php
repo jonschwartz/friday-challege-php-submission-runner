@@ -8,7 +8,7 @@
  * Good Luck!
  */
 
-$function = function($test_data) {
+$function = function($testData) {
   // YOUR CODE GOES HERE
 };
 

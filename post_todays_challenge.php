@@ -17,7 +17,6 @@ send_to_jon($wf_slack, $client, 'Starting to post today\'s challenge.');
 
 // GRAB THE CODE
 $today = new DateTime();
-
 $todays_challenge_dir = $challenges_dir . '/' . $today->format('Y_m_d');
 
 if (is_dir($todays_challenge_dir)) {
@@ -31,7 +30,6 @@ if (is_dir($todays_challenge_dir)) {
   send_to_jon($wf_slack, $client, 'Challenge directory does not exist for today ('.$todays_challenge_dir.').  Bailing.');
   die('Challenge directory does not exist for today.  Bailing.'."\n");
 }
-
 
 // POST THE CODE
 send_to_jon($wf_slack, $client, 'Posting the code.');
@@ -65,8 +63,14 @@ if (is_file($todays_challenge_dir.'/pre_challenge_writeup.md')) {
   send_to_jon($wf_slack, $client, 'Pre-challenge write up missing');
 }
 
-if (is_file($todays_challenge_dir.'/challenge_comment.php')) {
+if (is_file($todays_challenge_dir.'/challenge_comment.php') && (file_get_contents($todays_challenge_dir.'/challenge_comment.php') != '')) {
   $challenge_message .= '```' . file_get_contents($todays_challenge_dir.'/challenge_comment.php') .'```'."\n\n";
+} else if (stristr($code, "*/")) {
+  $begin_challenge_message = strpos($code, "/*");
+  $end_challenge_message = strpos($code, "*/", $begin_challenge_message);
+  echo $begin_challenge_message."|".$end_challenge_message."\n";
+  $challenge_message = '```' . substr($code, $begin_challenge_message, $end_challenge_message - $begin_challenge_message + 2).'```'."\n\n";
+
 } else {
   send_to_jon($wf_slack, $client, 'Challenge Comment missing.  Bailing');
   die('Challenge comment missing.  Bailing');
